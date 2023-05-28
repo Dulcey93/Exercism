@@ -283,6 +283,7 @@ class Tournament
                 }
             }
         }
+        //La función de comparación utiliza una expresión de comparación de la nave espacial <=> para ordenar los equipos primero por puntos de forma descendente y luego por nombre de forma ascendente.
         usort($this->teams, static fn(TeamScore $a, TeamScore $b) =>
             [$b->getPoints(), $a->getName()] <=> [$a->getPoints(), $b->getName()]
         );
