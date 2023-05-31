@@ -446,3 +446,75 @@ class SimpleCipher
 
 
 ````
+### Exercise 8
+
+## Instructions
+
+Your task is to build a high-score component of the classic Frogger game, one of the highest selling and addictive games of all time, and a classic of the arcade era. Your task is to write methods that return the highest score from the list, the last added score and the three highest scores.
+
+
+
+## Solution
+
+````php
+<?php
+
+class HighScores
+{
+    public function __construct(array $scores)
+    {
+        $this->scores = $scores;
+        $this->latest = end($scores);
+        $this->personalBest = max($scores);
+        rsort($scores);
+        $this->personalTopThree = array_slice($scores, 0, 3);
+    }
+}
+
+````
+### Exercise 9
+
+## Instructions
+
+Bob is a lackadaisical teenager. In conversation, his responses are very limited.
+
+Bob answers 'Sure.' if you ask him a question, such as "How are you?".
+
+He answers 'Whoa, chill out!' if you YELL AT HIM (in all capitals).
+
+He answers 'Calm down, I know what I'm doing!' if you yell a question at him.
+
+He says 'Fine. Be that way!' if you address him without actually saying anything.
+
+He answers 'Whatever.' to anything else.
+
+Bob's conversational partner is a purist when it comes to written communication and always follows normal rules regarding sentence punctuation in English.
+
+The commented tests at the bottom of the bob_test.php are Stretch Goals, they are optional. They may be easier to solve if you are using the mb_string functions, which aren't installed by default with every version of PHP.
+
+
+
+## Solution
+
+````php
+<?php
+
+class Bob
+{
+    public function respondTo($request)
+    {
+        $isSilence = !!preg_match('/^\s*$/', $request);
+        $isQuestion = substr(trim($request), -1) === '?';
+        $isYell = strtoupper($request) === $request &&
+            preg_match('/[A-Za-z]/', $request);
+        return match (true) {
+            $isSilence => 'Fine. Be that way!',
+            $isQuestion && $isYell => 'Calm down, I know what I\'m doing!',
+            $isQuestion => 'Sure.',
+            $isYell => 'Whoa, chill out!',
+            default => 'Whatever.'
+        };
+    }
+}
+
+````
